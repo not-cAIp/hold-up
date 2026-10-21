@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hold Up — should I buy this?</title>
+<meta name="description" content="Post what's in your cart. Strangers or your friends swipe get it or skip it before you buy.">
+<meta property="og:title" content="Hold Up — should I buy this?">
+<meta property="og:description" content="Post what's in your cart. People swipe get it or skip it before you buy.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23E8457F'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia' font-style='italic'%3Eh%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <h1>hold up<span>.</span></h1>
+      <button class="btn small" id="fab" type="button" hidden>+ Post</button>
+    </div>
+    <p class="tag">Post it before you buy it. Swipe right for get it, left for skip it.</p>
+    <nav class="tabs" role="tablist">
+      <button role="tab" id="tab-square" aria-selected="true" data-tab="square">Feed</button>
+      <button role="tab" id="tab-groups" aria-selected="false" data-tab="groups">Circles</button>
+      <button role="tab" id="tab-mine" aria-selected="false" data-tab="mine">Me</button>
+    </nav>
+  </header>
+  <div id="banner" class="banner" hidden></div>
+  <main id="view"></main>
+</div>
+
+<div class="cbar" id="cbar" hidden>
+  <div class="cbar-in">
+    <div class="cbar-top"><span class="msg" id="cbar-msg"></span>
+      <span style="display:flex;gap:4px;align-items:center;flex:none"><button type="button" class="linkish" id="cbar-undo">Undo</button><button type="button" class="xbtn" id="cbar-close" aria-label="Close">×</button></span></div>
+    <div class="presets" id="cbar-presets"></div>
+    <div class="cbar-row"><input type="text" id="cbar-text" maxlength="300" placeholder="Add a comment (optional)"><button type="button" class="btn small" id="cbar-send">Send</button></div>
+  </div>
+</div>
+
+<div class="sheet-back" id="sheet" hidden>
+  <div class="sheet" role="dialog" aria-labelledby="sheet-title">
+    <h2 id="sheet-title">What's in your cart?</h2>
+    <form class="form" id="req-form">
+      <div id="photo-field" hidden>
+        <div style="font-size:14px;font-weight:600;margin-bottom:6px">Photo <span class="opt">(optional)</span></div>
+        <label class="picker" id="picker"><input type="file" id="f-photo" accept="image/png,image/jpeg,image/webp,image/gif,image/*" aria-label="Add a photo of the item">
+          <span class="plus">+</span><span>Add a photo or screenshot</span></label>
+        <div class="picker-actions" id="photo-actions" hidden><button type="button" class="linkish" id="photo-remove">Remove photo</button></div>
+      </div>
+      <label>The thing<input type="text" id="f-item" maxlength="80" required placeholder="Pink Stanley cup"></label>
+      <div class="row">
+        <label style="flex:2">Price<input type="number" id="f-price" min="0" step="0.01" required inputmode="decimal" placeholder="45"></label>
+        <label style="flex:1">Currency<select id="f-cur"></select></label>
+      </div>
+      <label>Link <span class="opt">(optional: TikTok Shop, Amazon, Shein…)</span><input type="url" id="f-link" maxlength="500" inputmode="url" placeholder="Paste the product link"></label>
+      <label>Why do you want it?<textarea id="f-reason" maxlength="400" required placeholder="Mine leaks in my gym bag."></textarea></label>
+      <label>Already own something like it? <span class="opt">(optional)</span><input type="text" id="f-alt" maxlength="300" placeholder="Two water bottles, one has a crack"></label>
+      <div>
+        <div style="font-size:14px;font-weight:600;margin-bottom:6px">Who votes?</div>
+        <div class="seg" id="f-scope"></div>
+      </div>
+      <div class="sheet-actions">
+        <button type="button" class="btn ghost" id="f-cancel">Cancel</button>
+        <button type="submit" class="btn" id="f-submit">Post it</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="sheet-back" id="detail-back" hidden style="z-index:22">
+  <div class="sheet detail" role="dialog" aria-label="Post">
+    <div class="detail-top"><button type="button" class="xbtn" id="detail-close" aria-label="Close">×</button></div>
+    <div id="detail"></div>
+  </div>
+</div>
+
+<div class="story-back" id="story-back" hidden>
+  <div class="story" id="story" role="dialog" aria-label="Story card"></div>
+  <div class="story-tools">
+    <span class="hint">Screenshot this for your story</span>
+    <button type="button" class="btn small ghost" id="story-close">Done</button>
+  </div>
+</div>
+<div class="sheet-back" id="survey-back" hidden style="z-index:23">
+  <div class="sheet" role="dialog" aria-labelledby="survey-title">
+    <h2 id="survey-title">Help shape Hold Up</h2>
+    <p class="hint">Six quick questions. Only the Hold Up team sees your answers.</p>
+    <form class="form" id="survey-form"><div id="survey-qs" style="display:flex;flex-direction:column;gap:18px"></div>
+      <div class="sheet-actions"><button type="button" class="btn ghost" id="survey-cancel">Not now</button><button type="submit" class="btn" id="survey-submit">Send answers</button></div>
+    </form>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
