@@ -52,7 +52,7 @@ select answers->>'feature' as feature, count(*) from survey_responses group by 1
 ## Before posting on Reddit
 - Turn on **CAPTCHA protection** (Authentication → Attack Protection, with hCaptcha or Cloudflare Turnstile) to stop bots creating guest accounts. This also needs a small code change to pass the captcha token.
 - Check reports now and then: `select * from reports order by created_at desc;`
-- Add a privacy policy page before collecting emails at scale.
+- Add a privacy policy page before collecting emails at scale. It should mention that photos are stored in a public bucket under random file names: anyone with a photo's exact link can open it, even on a circle-only post.
 
 ## Shared backend
 The iPhone app (Expo) uses this same Supabase project and `supabase/schema.sql`, so posts and votes show up in both.

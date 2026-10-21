@@ -173,7 +173,8 @@ alter table public.blocks enable row level security;
 alter table public.survey_responses enable row level security;
 
 do $$ declare r record; begin
-  for r in select policyname, tablename from pg_policies where schemaname = 'public' loop
+  -- comment_reports is owned by the app's migration (supabase/migrations/*_comment_reports.sql); leave its policy alone
+  for r in select policyname, tablename from pg_policies where schemaname = 'public' and tablename <> 'comment_reports' loop
     execute format('drop policy %I on public.%I', r.policyname, r.tablename);
   end loop;
 end $$;
